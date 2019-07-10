@@ -46,6 +46,7 @@ export default class NewArt extends Component {
       await this.createArt({
         content: this.state.content
       });
+      console.log(this.state.content)
       this.props.history.push("/");
     } catch (e) {
       alert(e);
@@ -54,8 +55,9 @@ export default class NewArt extends Component {
   }
   
   createArt(art) {
+    console.log(art.content)
     return API.post("street-art", "art", {
-      body: art
+      body: art.content
     });
   }
   
