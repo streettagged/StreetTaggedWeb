@@ -8,6 +8,7 @@ import {
 import LoaderButton from "../components/LoaderButton";
 import "./Signup.css";
 import { Auth } from "aws-amplify";
+import FacebookButton from "../components/FacebookButton";
 
 
 export default class Signup extends Component {
@@ -24,6 +25,10 @@ export default class Signup extends Component {
     };
   }
 
+  handleFbLogin = () => {
+    this.props.userHasAuthenticated(true);
+  };
+  
   validateForm() {
     return (
       this.state.email.length > 0 &&
@@ -108,6 +113,10 @@ export default class Signup extends Component {
   renderForm() {
     return (
       <form onSubmit={this.handleSubmit}>
+           <FacebookButton
+        onLogin={this.handleFbLogin}
+      />
+      <hr />
         <FormGroup controlId="email" bsSize="large">
           <ControlLabel>Email</ControlLabel>
           <FormControl

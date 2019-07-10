@@ -14,7 +14,9 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "deploy": "aws s3 sync build/ s3://streetart-app",
+    "predeploy": "npm run build",
+    "deploy": "aws s3 sync build/ s3://streetart-app --delete",
+    "postdeploy": "aws cloudfront create-invalidation --distribution-id E3JOW6XI1ATD9Z --paths '/*' && aws cloudfront create-invalidation --distribution-id EAR235QI1CVGI --paths '/*'",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },

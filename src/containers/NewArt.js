@@ -4,6 +4,7 @@ import LoaderButton from "../components/LoaderButton";
 import config from "../config";
 import "./NewArt.css";
 import { API } from "aws-amplify";
+import { s3Upload } from "../libs/awsLib";
 
 
 export default class NewArt extends Component {
@@ -19,7 +20,8 @@ export default class NewArt extends Component {
   }
 
   validateForm() {
-    return this.state.content.length > 0;
+    return true
+   // return this.state.content.length > 0;
   }
 
   handleChange = event => {
@@ -43,10 +45,13 @@ export default class NewArt extends Component {
     this.setState({ isLoading: true });
   
     try {
+      const picture = this.file
+        ? await s3Upload(this.file)
+        : null;
+  
       await this.createArt({
-        content: this.state.content
+        picture
       });
-      console.log(this.state.content)
       this.props.history.push("/");
     } catch (e) {
       alert(e);
@@ -54,24 +59,26 @@ export default class NewArt extends Component {
     }
   }
   
-  createArt(art) {
-    console.log(art.content)
-    return API.post("street-art", "art", {
-      body: art.content
-    });
+  createArt(picture) {
+    let myInit = {
+      body: picture, // replace this with attributes you need
+      headers: {"Content-Type": "application/json"}
+    }
+    console.log(myInit)
+    return API.post("street-art", "/art", myInit)
   }
   
   render() {
     return (
       <div className="NewArt">
         <form onSubmit={this.handleSubmit}>
-          <FormGroup controlId="content">
+        {/*   <FormGroup controlId="content">
             <FormControl
               onChange={this.handleChange}
               value={this.state.content}
               componentClass="textarea"
             />
-          </FormGroup>
+          </FormGroup> */}
           <FormGroup controlId="file">
             <ControlLabel>Attachment</ControlLabel>
             <FormControl onChange={this.handleFileChange} type="file" />
@@ -80,10 +87,10 @@ export default class NewArt extends Component {
             block
             bsStyle="primary"
             bsSize="large"
-            disabled={!this.validateForm()}
+            //disabled={!this.file}
             type="submit"
             isLoading={this.state.isLoading}
-            text="Create"
+            text="Upload"
             loadingText="Creating…"
           />
         </form>

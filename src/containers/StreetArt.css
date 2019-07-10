@@ -1,0 +1,9 @@
+
+.StreetArt form {
+    padding-bottom: 15px;
+  }
+  
+.StreetArt form textarea {
+    height: 30px;
+    font-size: 24px;
+  }
