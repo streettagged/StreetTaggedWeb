@@ -1,12 +1,9 @@
 export default {
     MAX_ATTACHMENT_SIZE: 5000000,
-    DUMMY_DATA : [{"artId":1,"picture":"https://sample-street-art.s3.amazonaws.com/7.jpg","name":"Southern Exposure"},
-    {"artId":2,"picture":"https://sample-street-art.s3.amazonaws.com/8.jpg","name":"This Just In"}],
-
-
+    DUMMY_DATA : [],
     s3: {
       REGION: "us-east-1",
-      BUCKET: "street-art-uploads"
+      BUCKET: "streetart-test"
     },
     apiGateway: {
       REGION: "us-east-1",
@@ -20,6 +17,12 @@ export default {
     },
     social: {
       FB: "336096600619048"
+    },
+    s3public: {
+        bucketName: 'streetart-test',
+        dirName: 'photos',
+        region: 'us-east-1',
+        accessKeyId: 'AKIA5QKAX6BGIVXHRBPL',
+        secretAccessKey: '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',
     }
   };
-  

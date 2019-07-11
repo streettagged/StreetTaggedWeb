@@ -31,16 +31,16 @@ export default class Home extends Component {
     this.setState({ isLoading: false });
   }
 
-  streetart() {
-   // return API.get("street-art", "/art/049cf700-1fe3-4006-990c-11851831855b");
-   return config.DUMMY_DATA
+  async streetart() {
+   const data = await API.get("street-art", "/art");
+   return data.artWorks;
   }
 
   handleStreetArtClick = event => {
     event.preventDefault();
     this.props.history.push(event.currentTarget.getAttribute("href"));
   }
-
+//header={streetart.name.trim().split("\n")[0]}
 renderStreetArtList(streetart) {
   return ([{}].concat(streetart).map(
     (streetart, i) =>
@@ -49,7 +49,6 @@ renderStreetArtList(streetart) {
             key={streetart.artId}
             href={`/art/${streetart.artId}`}
             onClick={this.handleStreetArtClick}
-            header={streetart.name.trim().split("\n")[0]}
           ><img src ={streetart.picture} alt="Logo" />
            </ListGroupItem>
 
@@ -59,7 +58,7 @@ renderStreetArtList(streetart) {
             onClick={this.handleStreetArtClick}
           >
             <h4>
-              <b>{"\uFF0B"}</b> Upload New Artwork 
+              <b>{"\uFF0B"}</b> Upload New Artwork
             </h4>
           </ListGroupItem>
   )
@@ -87,7 +86,7 @@ renderLander() {
 renderArt() {
   return (
     <div className="streetart">
-      <PageHeader>Your Uploads</PageHeader>
+      <PageHeader>Some Art Work</PageHeader>
       <ListGroup>
         {!this.state.isLoading && this.renderStreetArtList(this.state.streetart)}
       </ListGroup>

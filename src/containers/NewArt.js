@@ -6,12 +6,13 @@ import "./NewArt.css";
 import { API } from "aws-amplify";
 import { s3Upload } from "../libs/awsLib";
 
+import { uploadFile } from 'react-s3';
 
 export default class NewArt extends Component {
   constructor(props) {
     super(props);
 
-    this.file = null;
+    this.file = 'test';
 
     this.state = {
       isLoading: null,
@@ -36,19 +37,18 @@ export default class NewArt extends Component {
 
   handleSubmit = async event => {
     event.preventDefault();
-  
+
     if (this.file && this.file.size > config.MAX_ATTACHMENT_SIZE) {
       alert(`Please pick a file smaller than ${config.MAX_ATTACHMENT_SIZE/1000000} MB.`);
       return;
     }
-  
+
     this.setState({ isLoading: true });
-  
+
     try {
-      const picture = this.file
-        ? await s3Upload(this.file)
-        : null;
-  
+      const data = await uploadFile(this.file, config.s3public);
+      const picture = data.location;
+
       await this.createArt({
         picture
       });
@@ -58,7 +58,7 @@ export default class NewArt extends Component {
       this.setState({ isLoading: false });
     }
   }
-  
+
   createArt(picture) {
     let myInit = {
       body: picture, // replace this with attributes you need
@@ -67,7 +67,7 @@ export default class NewArt extends Component {
     console.log(myInit)
     return API.post("street-art", "/art", myInit)
   }
-  
+
   render() {
     return (
       <div className="NewArt">
