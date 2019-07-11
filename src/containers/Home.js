@@ -49,7 +49,7 @@ renderStreetArtList(streetart) {
             key={streetart.artId}
             href={`/art/${streetart.artId}`}
             onClick={this.handleStreetArtClick}
-          ><img src ={streetart.picture} alt="Logo" />
+          ><img src ={streetart.picture} alt="Logo" style={{ height: '500px', width: '500px'}}/>
            </ListGroupItem>
 
         : <ListGroupItem
