@@ -2,8 +2,7 @@ import React, { Component } from "react";
 import { API, Storage } from "aws-amplify";
 import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
-import { s3Upload } from "../libs/awsLib";
-import config from "../config";
+import { Link } from "react-router-dom";
 import "./StreetArt.css";
 
 export default class StreetArt extends Component {
@@ -41,12 +40,12 @@ export default class StreetArt extends Component {
   }
 
   getArt() {
-    return config.DUMMY_DATA[0]   // return API.get("street-art", `/art/${this.props.match.params.id}`);
+    return API.get("street-art", `/art/${this.props.match.params.id}`);
   }
 
-  validateForm() {
+/*   validateForm() {
     return this.state.name.length > 0;
-  }
+  } */
 
   render() {
     return (
@@ -56,7 +55,7 @@ export default class StreetArt extends Component {
             <FormGroup controlId="name">
             <ControlLabel>{this.state.name}</ControlLabel>
             </FormGroup>
-            <img src ={this.state.picture} alt="Logo" />
+            <img src ={this.state.picture} width="100%"/>
             {this.state.art.attachment &&
               <FormGroup>
                 <ControlLabel>Attachment</ControlLabel>
@@ -70,22 +69,13 @@ export default class StreetArt extends Component {
                   </a>
                 </FormControl.Static>
               </FormGroup>}
-            <FormGroup controlId="file">
-              {!this.state.art.attachment &&
-                <ControlLabel>Attachment</ControlLabel>}
-              <FormControl onChange={this.handleFileChange} type="file" />
+            <FormGroup controlId="details">
+                <ControlLabel>Details</ControlLabel>
             </FormGroup>
-            <LoaderButton
-              block
-              bsStyle="primary"
-              bsSize="large"
-              disabled={!this.validateForm()}
-              type="submit"
-              isLoading={this.state.isLoading}
-              text="Save"
-              loadingText="Saving…"
-            />
-            <LoaderButton
+            <Link to="/login" className="btn btn-info btn-block">
+          Back
+        </Link>
+{/*             <LoaderButton
               block
               bsStyle="danger"
               bsSize="large"
@@ -93,7 +83,7 @@ export default class StreetArt extends Component {
               onClick={this.handleDelete}
               text="Delete"
               loadingText="Deleting…"
-            />
+            /> */}
           </form>}
       </div>
     );

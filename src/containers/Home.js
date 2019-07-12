@@ -48,7 +48,7 @@ renderStreetArtList(streetart) {
             key={streetart.artId}
             href={`/art/${streetart.artId}`}
             onClick={this.handleStreetArtClick}
-          ><img src ={streetart.picture} alt={streetart.name} width="100%" />
+          ><img src ={streetart.picture} width="100%" />
            </ListGroupItem>
 
         : <ListGroupItem

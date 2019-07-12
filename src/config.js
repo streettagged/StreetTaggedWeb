@@ -1,6 +1,5 @@
 export default {
     MAX_ATTACHMENT_SIZE: 5000000,
-    DUMMY_DATA : [],
     s3: {
       REGION: "us-east-1",
       BUCKET: "streetart-test"
