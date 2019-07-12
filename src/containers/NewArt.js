@@ -5,6 +5,7 @@ import config from "../config";
 import "./NewArt.css";
 import { API } from "aws-amplify";
 import { s3Upload } from "../libs/awsLib";
+import  GeoLocation from "../components/GeoLocation";
 
 import { uploadFile } from 'react-s3';
 
@@ -81,6 +82,7 @@ export default class NewArt extends Component {
           </FormGroup> */}
           <FormGroup controlId="file">
             <ControlLabel>Contribute Art</ControlLabel>
+            <GeoLocation />
             <FormControl onChange={this.handleFileChange} type="file" />
           </FormGroup>
           <LoaderButton
