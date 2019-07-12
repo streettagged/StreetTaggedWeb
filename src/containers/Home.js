@@ -3,7 +3,6 @@ import { API } from "aws-amplify";
 import { Link } from "react-router-dom";
 import { PageHeader, ListGroup, ListGroupItem } from "react-bootstrap";
 import "./Home.css";
-import config from "../config";
 
 
 export default class Home extends Component {
@@ -49,11 +48,11 @@ renderStreetArtList(streetart) {
             key={streetart.artId}
             href={`/art/${streetart.artId}`}
             onClick={this.handleStreetArtClick}
-          ><img src ={streetart.picture} alt="Logo" style={{ height: '500px', width: '500px'}}/>
+          ><img src ={streetart.picture} alt={streetart.name} width="100%" />
            </ListGroupItem>
 
         : <ListGroupItem
-            key="99999"
+            key="new"
             href="/art/new"
             onClick={this.handleStreetArtClick}
           >
@@ -86,7 +85,7 @@ renderLander() {
 renderArt() {
   return (
     <div className="streetart">
-      <PageHeader>Some Art Work</PageHeader>
+      <PageHeader>Latest Street Art</PageHeader>
       <ListGroup>
         {!this.state.isLoading && this.renderStreetArtList(this.state.streetart)}
       </ListGroup>

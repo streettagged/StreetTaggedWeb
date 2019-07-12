@@ -80,7 +80,7 @@ export default class NewArt extends Component {
             />
           </FormGroup> */}
           <FormGroup controlId="file">
-            <ControlLabel>Attachment</ControlLabel>
+            <ControlLabel>Contribute Art</ControlLabel>
             <FormControl onChange={this.handleFileChange} type="file" />
           </FormGroup>
           <LoaderButton

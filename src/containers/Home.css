@@ -3,30 +3,36 @@
     text-align: center;
   }
   
-  .Home .lander h1 {
-    font-family: "Open Sans", sans-serif;
-    font-weight: 600;
-  }
-  
-  .Home .lander p {
-    color: #999;
-  }
-  
-  .Home .lander div {
-    padding-top: 20px;
-  }
-  .Home .lander div a:first-child {
-    margin-right: 20px;
-  }
-  
-  .Home .streetart h4 {
-    font-family: "Open Sans", sans-serif;
-    font-weight: 600;
-    overflow: hidden;
-    line-height: 1.5;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-  }
-  .Home .streetart p {
-    color: #666;
-  }
+.Home .lander h1 {
+  font-family: "Open Sans", sans-serif;
+  font-weight: 600;
+}
+
+.Home .lander p {
+  color: #999;
+}
+
+.Home .lander div {
+  padding-top: 20px;
+}
+.Home .lander div a:first-child {
+  margin-right: 20px;
+}
+
+.Home .streetart h4 {
+  font-family: "Open Sans", sans-serif;
+  font-weight: 600;
+  overflow: hidden;
+  line-height: 1.5;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+.Home .streetart p {
+  color: #666;
+}
+
+.thumbnail {
+  height: 100px;
+  display: table;
+}
+
