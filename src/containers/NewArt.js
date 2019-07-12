@@ -4,8 +4,6 @@ import LoaderButton from "../components/LoaderButton";
 import config from "../config";
 import "./NewArt.css";
 import { API } from "aws-amplify";
-import { s3Upload } from "../libs/awsLib";
-import  GeoLocation from "../components/GeoLocation";
 
 import { uploadFile } from 'react-s3';
 
@@ -17,13 +15,35 @@ export default class NewArt extends Component {
 
     this.state = {
       isLoading: null,
-      content: ""
+      latitude: '',
+      longitude: '',
     };
+
+    this.getMyLocation = this.getMyLocation.bind(this)
+  }
+
+  componentDidMount() {
+    this.getMyLocation()
+  }
+
+  getMyLocation() {
+    const location = window.navigator && window.navigator.geolocation
+    
+    if (location) {
+      location.getCurrentPosition((position) => {
+        this.setState({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        })
+      }, (error) => {
+        this.setState({ latitude: 'err-latitude', longitude: 'err-longitude' })
+      })
+    }
+
   }
 
   validateForm() {
-    return true
-   // return this.state.content.length > 0;
+    return this.state.latitude !== '';
   }
 
   handleChange = event => {
@@ -38,6 +58,8 @@ export default class NewArt extends Component {
 
   handleSubmit = async event => {
     event.preventDefault();
+    let coordinates = {latitude: this.state.latitude,
+                       longitude: this.state.longitude};
 
     if (this.file && this.file.size > config.MAX_ATTACHMENT_SIZE) {
       alert(`Please pick a file smaller than ${config.MAX_ATTACHMENT_SIZE/1000000} MB.`);
@@ -49,9 +71,9 @@ export default class NewArt extends Component {
     try {
       const data = await uploadFile(this.file, config.s3public);
       const picture = data.location;
-
       await this.createArt({
-        picture
+        picture,
+        coordinates
       });
       this.props.history.push("/");
     } catch (e) {
@@ -60,9 +82,9 @@ export default class NewArt extends Component {
     }
   }
 
-  createArt(picture) {
+  createArt(body) {
     let myInit = {
-      body: picture, // replace this with attributes you need
+      body: body, // replace this with attributes you need
       headers: {"Content-Type": "application/json"}
     }
     console.log(myInit)
@@ -73,28 +95,19 @@ export default class NewArt extends Component {
     return (
       <div className="NewArt">
         <form onSubmit={this.handleSubmit}>
-        {/*   <FormGroup controlId="content">
-            <FormControl
-              onChange={this.handleChange}
-              value={this.state.content}
-              componentClass="textarea"
-            />
-          </FormGroup> */}
           <FormGroup controlId="file">
-            <ControlLabel>Contribute Art</ControlLabel>
-            <GeoLocation />
-            <FormControl onChange={this.handleFileChange} type="file" />
+              <FormControl onChange={this.handleFileChange} type="file" />
           </FormGroup>
           <LoaderButton
             block
             bsStyle="primary"
             bsSize="large"
-            //disabled={!this.file}
+            disabled={!this.validateForm()}
             type="submit"
             isLoading={this.state.isLoading}
             text="Upload"
             loadingText="Creating…"
-          />
+          />      
         </form>
       </div>
     );
