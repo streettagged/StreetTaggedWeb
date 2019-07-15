@@ -12,25 +12,19 @@ export default class StreetArt extends Component {
     this.file = null;
 
     this.state = {
-      art: null,
+      artWork: null,
       name: "",
       picture: null,
-      attachmentURL: null
     };
   }
 
   async componentDidMount() {
     try {
-      let attachmentURL;
-      const art = await this.getArt();
-      const { name, picture } = art;
-
-      if (picture) {
-        attachmentURL = await Storage.vault.get(picture);
-      }
-
+      const response = await this.getArt();
+      const artWork = response.artWork
+      const { name, picture, artId } = artWork;
       this.setState({
-        art,
+        artWork,
         name,
         picture
       });
@@ -49,41 +43,18 @@ export default class StreetArt extends Component {
 
   render() {
     return (
+
       <div className="StreetArt">
-        {this.state.art &&
+        {this.state.artWork &&
           <form onSubmit={this.handleSubmit}>
             <FormGroup controlId="name">
             <ControlLabel>{this.state.name}</ControlLabel>
+            <img src ={this.state.picture} width="100%" />
             </FormGroup>
-            <img src ={this.state.picture} width="100%"/>
-            {this.state.art.attachment &&
-              <FormGroup>
-                <ControlLabel>Attachment</ControlLabel>
-                <FormControl.Static>
-                  <a
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    href={this.state.attachmentURL}
-                  >
-                    {this.formatFilename(this.state.art.attachment)}
-                  </a>
-                </FormControl.Static>
-              </FormGroup>}
-            <FormGroup controlId="details">
-                <ControlLabel>Details</ControlLabel>
-            </FormGroup>
+         
             <Link to="/login" className="btn btn-info btn-block">
           Back
         </Link>
-{/*             <LoaderButton
-              block
-              bsStyle="danger"
-              bsSize="large"
-              isLoading={this.state.isDeleting}
-              onClick={this.handleDelete}
-              text="Delete"
-              loadingText="Deleting…"
-            /> */}
           </form>}
       </div>
     );

@@ -10,7 +10,7 @@ export default class Login extends Component {
     super(props);
 
     this.state = {
-        isLoading: false,
+      isLoading: false,
       email: "",
       password: ""
     };
