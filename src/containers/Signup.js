@@ -8,8 +8,6 @@ import {
 import LoaderButton from "../components/LoaderButton";
 import "./Signup.css";
 import { Auth } from "aws-amplify";
-import FacebookButton from "../components/FacebookButton";
-
 
 export default class Signup extends Component {
   constructor(props) {
@@ -19,6 +17,7 @@ export default class Signup extends Component {
       isLoading: false,
       email: "",
       password: "",
+      username: "",
       confirmPassword: "",
       confirmationCode: "",
       newUser: null
@@ -32,6 +31,7 @@ export default class Signup extends Component {
   validateForm() {
     return (
       this.state.email.length > 0 &&
+      this.state.username.length > 0 &&
       this.state.password.length > 0 &&
       this.state.password === this.state.confirmPassword
     );
@@ -54,8 +54,13 @@ export default class Signup extends Component {
   
     try {
       const newUser = await Auth.signUp({
-        username: this.state.email,
-        password: this.state.password
+        email: this.state.email,
+        username: this.state.username,
+        password: this.state.password,
+        attributes: {
+          email: this.state.email,
+          updated_at: Date.now().toString()
+        }
       });
       this.setState({
         newUser
@@ -73,8 +78,8 @@ export default class Signup extends Component {
     this.setState({ isLoading: true });
   
     try {
-      await Auth.confirmSignUp(this.state.email, this.state.confirmationCode);
-      await Auth.signIn(this.state.email, this.state.password);
+      await Auth.confirmSignUp(this.state.username, this.state.confirmationCode);
+      await Auth.signIn(this.state.username, this.state.password);
   
       this.props.userHasAuthenticated(true);
       this.props.history.push("/");
@@ -113,11 +118,16 @@ export default class Signup extends Component {
   renderForm() {
     return (
       <form onSubmit={this.handleSubmit}>
-           <FacebookButton
-        onLogin={this.handleFbLogin}
-      />
-      <hr />
-        <FormGroup controlId="email" bsSize="large">
+        <FormGroup controlId="username" bsSize="large">
+          <ControlLabel>Username</ControlLabel>
+          <FormControl
+            autoFocus
+            type="username"
+            value={this.state.username}
+            onChange={this.handleChange}
+          />
+        </FormGroup>
+          <FormGroup controlId="email" bsSize="large">
           <ControlLabel>Email</ControlLabel>
           <FormControl
             autoFocus
