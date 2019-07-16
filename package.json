@@ -19,12 +19,14 @@
     "start": "REACT_APP_STAGE=dev react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
+    
     "predeploy": "REACT_APP_STAGE=dev npm run build",
     "deploy": "aws s3 sync build/ s3://streetart-app --delete",
-    "postdeploy": "aws cloudfront create-invalidation --distribution-id E3JOW6XI1ATD9Z --paths '/*' && aws cloudfront create-invalidation --distribution-id EAR235QI1CVGI --paths '/*'",
+    "postdeploy": "aws cloudfront create-invalidation --distribution-id EAR235QI1CVGI --paths '/*'",
+
     "predeploy:prod": "REACT_APP_STAGE=production npm run build",
     "deploy:prod": "aws s3 sync build/ s3://streetart-app-prod --delete",
-    "postdeploy:prod": "aws cloudfront create-invalidation --distribution-id E3JOW6XI1ATD9Z --paths '/*' && aws cloudfront create-invalidation --distribution-id EAR235QI1CVGI --paths '/*'",
+    "postdeploy:prod": "aws cloudfront create-invalidation --distribution-id E8TH0B7MVZ5SD --paths '/*' && aws cloudfront create-invalidation --distribution-id E3JOW6XI1ATD9Z --paths '/*'",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
