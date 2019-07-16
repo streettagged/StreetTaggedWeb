@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import { LinkContainer } from "react-router-bootstrap";
 import LoaderButton from "../components/LoaderButton";
-import { Auth } from "aws-amplify";
 import "./Settings.css";
 
 export default class Settings extends Component {
