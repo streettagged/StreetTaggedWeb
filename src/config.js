@@ -1,5 +1,8 @@
 export default {
     MAX_ATTACHMENT_SIZE: 5000000,
+    mapbox: {
+      TOKEN: "dummy"
+    },
     s3: {
       REGION: "us-east-1",
       BUCKET: "streetart-test"
