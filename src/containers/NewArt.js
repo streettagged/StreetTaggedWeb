@@ -72,14 +72,14 @@ export default class NewArt extends Component {
       const { accessToken: { jwtToken } } = Auth.user.signInUserSession;
 
 
-      const picture = this.file
+      let picture = this.file
       ? await s3Upload(this.file)
       : null;
       
-     let picture_url = "https://" + config.s3.BUCKET + ".s3.amazonaws.com/public/" + picture
+      picture = "https://" + config.s3.BUCKET + ".s3.amazonaws.com/public/" + picture
 
       await this.createArt({
-        picture_url,
+        picture,
         coordinates,
         token: jwtToken
       });
