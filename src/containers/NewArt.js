@@ -71,12 +71,7 @@ export default class NewArt extends Component {
     try {
       const { accessToken: { jwtToken } } = Auth.user.signInUserSession;
 
-      const data = await uploadFile(this.file, {
-        bucketName: config.s3.BUCKET,
-        region: config.s3.REGION,
-        accessKeyId: config.s3.KEY,
-        secretAccessKey: config.s3.ACCESS,
-      });
+      const data = await uploadFile(this.file, config.s3);
 
       const picture = data.location;
       await this.createArt({
