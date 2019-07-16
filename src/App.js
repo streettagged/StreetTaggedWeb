@@ -4,9 +4,6 @@ import { Link, withRouter} from "react-router-dom";
 import { Nav, Navbar, NavItem } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { Auth } from "aws-amplify";
-import config from "./config";
-
-
 
 import "./App.css";
 import Routes from "./Routes";
