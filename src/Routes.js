@@ -7,6 +7,7 @@ import AppliedRoute from "./components/AppliedRoute";
 import Signup from "./containers/Signup";
 import StreetArt from "./containers/StreetArt";
 import NewArt from "./containers/NewArt";
+import MapView from "./containers/MapView";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import UnauthenticatedRoute from "./components/UnauthenticatedRoute";
 
@@ -17,7 +18,8 @@ export default ({ childProps }) =>
     <AppliedRoute path="/" exact component={Home} props={childProps} />
     <UnauthenticatedRoute path="/login" exact component={Login} props={childProps} />
     <UnauthenticatedRoute path="/signup" exact component={Signup} props={childProps} />
-    <AppliedRoute path="/art/new" exact component={NewArt} props={childProps} />
+    <AuthenticatedRoute path="/mapview" exact component={MapView} props={childProps} />
+    <AuthenticatedRoute path="/art/new" exact component={NewArt} props={childProps} />
     <AuthenticatedRoute path="/art/:id" exact component={StreetArt} props={childProps} />
 
 
