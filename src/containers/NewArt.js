@@ -3,7 +3,7 @@ import { FormGroup, FormControl } from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
 import config from "../config";
 import "./NewArt.css";
-import { API } from "aws-amplify";
+import { API, Auth } from "aws-amplify";
 
 import { uploadFile } from 'react-s3';
 
@@ -28,7 +28,7 @@ export default class NewArt extends Component {
 
   getMyLocation() {
     const location = window.navigator && window.navigator.geolocation
-    
+
     if (location) {
       location.getCurrentPosition((position) => {
         this.setState({
@@ -69,11 +69,20 @@ export default class NewArt extends Component {
     this.setState({ isLoading: true });
 
     try {
-      const data = await uploadFile(this.file, config.s3public);
+      const { accessToken: { jwtToken } } = Auth.user.signInUserSession;
+
+      const data = await uploadFile(this.file, {
+        bucketName: config.s3.BUCKET,
+        region: config.s3.REGION,
+        accessKeyId: config.s3.KEY,
+        secretAccessKey: config.s3.ACCESS,
+      });
+
       const picture = data.location;
       await this.createArt({
         picture,
-        coordinates
+        coordinates,
+        token: jwtToken
       });
       this.props.history.push("/");
     } catch (e) {
@@ -107,7 +116,7 @@ export default class NewArt extends Component {
             isLoading={this.state.isLoading}
             text="Upload"
             loadingText="Creating…"
-          />      
+          />
         </form>
       </div>
     );
