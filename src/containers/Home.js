@@ -67,7 +67,7 @@ renderStreetArtList(streetart) {
 renderLander() {
   return (
     <div className="lander">
-      <h1>StreetTagged-Prod</h1>
+      <h1>StreetTagged</h1>
       <p>A simple street art sharing app</p>
       <div>
         <Link to="/login" className="btn btn-info btn-lg">
