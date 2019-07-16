@@ -2,8 +2,8 @@ require('dotenv').config()
 const dev = {
     s3: {
       REGION: process.env.REACT_APP_DEV_S3_REGION,
-      BUCKET: process.env.REACT_APP_DEV_S3_BUCKET
-    },
+      BUCKET: process.env.REACT_APP_DEV_S3_BUCKET,
+        },
     apiGateway: {
       REGION: process.env.REACT_APP_DEV_API_REGION,
       URL: process.env.REACT_APP_DEV_API_URL

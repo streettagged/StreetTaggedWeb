@@ -4,14 +4,14 @@ import LoaderButton from "../components/LoaderButton";
 import config from "../config";
 import "./NewArt.css";
 import { API } from "aws-amplify";
+import { s3Upload } from "../libs/awsLib";
 
-import { uploadFile } from 'react-s3';
 
 export default class NewArt extends Component {
   constructor(props) {
     super(props);
 
-    this.file = 'test';
+    this.file = null;
 
     this.state = {
       isLoading: null,
@@ -69,8 +69,13 @@ export default class NewArt extends Component {
     this.setState({ isLoading: true });
 
     try {
-      const data = await uploadFile(this.file, config.s3public);
-      const picture = data.location;
+      console.log(config.s3)
+
+      const picture = this.file
+      ? await s3Upload(this.file)
+      : null;
+
+     console.log(picture)
       await this.createArt({
         picture,
         coordinates
@@ -92,6 +97,7 @@ export default class NewArt extends Component {
   }
 
   render() {
+    console.log(config.s3)
     return (
       <div className="NewArt">
         <form onSubmit={this.handleSubmit}>
