@@ -3,7 +3,7 @@ import { FormGroup, FormControl } from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
 import config from "../config";
 import "./NewArt.css";
-import { API } from "aws-amplify";
+import { API, Auth } from "aws-amplify";
 import { s3Upload } from "../libs/awsLib";
 
 
@@ -69,6 +69,7 @@ export default class NewArt extends Component {
     this.setState({ isLoading: true });
 
     try {
+      const { accessToken: { jwtToken } } = Auth.user.signInUserSession;
       console.log(config.s3)
 
       const picture = this.file
@@ -78,7 +79,8 @@ export default class NewArt extends Component {
      console.log(picture)
       await this.createArt({
         picture,
-        coordinates
+        coordinates,
+        token: jwtToken
       });
       this.props.history.push("/");
     } catch (e) {
