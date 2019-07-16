@@ -16,12 +16,5 @@ export default {
     },
     social: {
       FB: "336096600619048"
-    },
-    s3public: {
-        bucketName: 'streetart-test',
-        dirName: 'photos',
-        region: 'us-east-1',
-        accessKeyId: 'AKIA5QKAX6BGIVXHRBPL',
-        secretAccessKey: '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',
     }
   };
