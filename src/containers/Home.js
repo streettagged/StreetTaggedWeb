@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { PageHeader, ListGroup, ListGroupItem } from "react-bootstrap";
 import "./Home.css";
 
-
 export default class Home extends Component {
   constructor(props) {
     super(props);
@@ -48,7 +47,7 @@ renderStreetArtList(streetart) {
             key={streetart.artId}
             href={`/art/${streetart.artId}`}
             onClick={this.handleStreetArtClick}
-          ><img src ={streetart.picture} width="100%" />
+          ><img src ={streetart.picture}  alt="street art" width="100%" />
            </ListGroupItem>
 
         : <ListGroupItem
@@ -67,8 +66,8 @@ renderStreetArtList(streetart) {
 renderLander() {
   return (
     <div className="lander">
-      <h1>StreetTagged</h1>
-      <p>A simple street art sharing app</p>
+      <h1>StreetTagged.com</h1>
+      <p>A simple street art sharing app.</p>
       <div>
         <Link to="/login" className="btn btn-info btn-lg">
           Login

@@ -5,6 +5,7 @@
   "dependencies": {
     "aws-amplify": "^1.1.29",
     "aws-s3": "^2.0.5",
+    "dotenv": "^8.0.0",
     "react": "^16.8.6",
     "react-bootstrap": "^0.32.4",
     "react-dom": "^16.8.6",
@@ -15,12 +16,17 @@
     "react-scripts": "3.0.1"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "REACT_APP_STAGE=dev PORT=8080 react-scripts start",
     "build": "react-scripts build",
-    "predeploy": "npm run build",
+    "test": "react-scripts test --env=jsdom",
+    
+    "predeploy": "REACT_APP_STAGE=dev npm run build",
     "deploy": "aws s3 sync build/ s3://streetart-app --delete",
-    "postdeploy": "aws cloudfront create-invalidation --distribution-id E3JOW6XI1ATD9Z --paths '/*' && aws cloudfront create-invalidation --distribution-id EAR235QI1CVGI --paths '/*'",
-    "test": "react-scripts test",
+    "postdeploy": "aws cloudfront create-invalidation --distribution-id EAR235QI1CVGI --paths '/*'",
+
+    "predeploy:prod": "REACT_APP_STAGE=production npm run build",
+    "deploy:prod": "aws s3 sync build/ s3://streetart-app-prod --delete",
+    "postdeploy:prod": "aws cloudfront create-invalidation --distribution-id E8TH0B7MVZ5SD --paths '/*' && aws cloudfront create-invalidation --distribution-id E3JOW6XI1ATD9Z --paths '/*'",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {

@@ -1,7 +1,6 @@
 import React, { Component } from "react";
-import { API, Storage } from "aws-amplify";
-import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
-import LoaderButton from "../components/LoaderButton";
+import { API } from "aws-amplify";
+import { FormGroup, ControlLabel } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import "./StreetArt.css";
 
@@ -22,7 +21,7 @@ export default class StreetArt extends Component {
     try {
       const response = await this.getArt();
       const artWork = response.artWork
-      const { name, picture, artId } = artWork;
+      const { name, picture } = artWork;
       this.setState({
         artWork,
         name,
@@ -49,7 +48,7 @@ export default class StreetArt extends Component {
           <form onSubmit={this.handleSubmit}>
             <FormGroup controlId="name">
             <ControlLabel>{this.state.name}</ControlLabel>
-            <img src ={this.state.picture} width="100%" />
+            <img src ={this.state.picture} alt="Street Art" width="100%" />
             </FormGroup>
          
             <Link to="/login" className="btn btn-info btn-block">
