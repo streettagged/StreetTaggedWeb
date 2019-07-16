@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import { PageHeader, ListGroup, ListGroupItem } from "react-bootstrap";
 import "./Home.css";
 
-
 export default class Home extends Component {
   constructor(props) {
     super(props);
