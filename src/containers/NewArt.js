@@ -70,15 +70,16 @@ export default class NewArt extends Component {
 
     try {
       const { accessToken: { jwtToken } } = Auth.user.signInUserSession;
-      console.log(config.s3)
+
 
       const picture = this.file
       ? await s3Upload(this.file)
       : null;
+      
+     let picture_url = "https://" + config.s3.BUCKET + ".s3.amazonaws.com/public/" + picture
 
-     console.log(picture)
       await this.createArt({
-        picture,
+        picture_url,
         coordinates,
         token: jwtToken
       });
@@ -94,12 +95,10 @@ export default class NewArt extends Component {
       body: body, // replace this with attributes you need
       headers: {"Content-Type": "application/json"}
     }
-    console.log(myInit)
     return API.post("street-art", "/art", myInit)
   }
 
   render() {
-    console.log(config.s3)
     return (
       <div className="NewArt">
         <form onSubmit={this.handleSubmit}>
