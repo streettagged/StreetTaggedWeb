@@ -3,7 +3,6 @@ import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import "./Login.css";
 import { Auth } from "aws-amplify";
 import LoaderButton from "../components/LoaderButton";
-import FacebookButton from "../components/FacebookButton";
 
 export default class Login extends Component {
   constructor(props) {
@@ -11,7 +10,7 @@ export default class Login extends Component {
 
     this.state = {
       isLoading: false,
-      email: "",
+      username: "",
       password: ""
     };
   }
@@ -21,7 +20,7 @@ export default class Login extends Component {
   };
   
   validateForm() {
-    return this.state.email.length > 0 && this.state.password.length > 0;
+    return this.state.username.length > 0 && this.state.password.length > 0;
   }
 
   handleChange = event => {
@@ -34,7 +33,7 @@ export default class Login extends Component {
     event.preventDefault();
     this.setState({ isLoading: true });
     try {
-      await Auth.signIn(this.state.email, this.state.password);
+      await Auth.signIn(this.state.username, this.state.password);
       this.props.userHasAuthenticated(true);
 
     } catch (e) {
@@ -48,16 +47,12 @@ export default class Login extends Component {
     return (
       <div className="Login">
         <form onSubmit={this.handleSubmit}>
-          <FacebookButton
-            onLogin={this.handleFbLogin}
-          />
-          <hr />
-          <FormGroup controlId="email" bsSize="large">
-            <ControlLabel>Email</ControlLabel>
+          <FormGroup controlId="username" bsSize="large">
+            <ControlLabel>Username/Email</ControlLabel>
             <FormControl
               autoFocus
-              type="email"
-              value={this.state.email}
+              type="username"
+              value={this.state.username}
               onChange={this.handleChange}
             />
           </FormGroup>

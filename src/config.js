@@ -10,8 +10,8 @@ export default {
     },
     cognito: {
       REGION: "us-east-1",
-      USER_POOL_ID: "us-east-1_OvHRINlq8",
-      APP_CLIENT_ID: "7poun2fmqke6jtsq6er8eo4ab7",
+      USER_POOL_ID: "us-east-1_FJaKcw4bh",
+      APP_CLIENT_ID: "khbkequqcckarsm3j0ra4tu4p",
       IDENTITY_POOL_ID: "us-east-1:d80cd3d4-0a8c-4cbf-a088-97e04bf4aef3"
     },
     social: {
