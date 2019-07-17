@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { API } from "aws-amplify";
 import { Link } from "react-router-dom";
-import { PageHeader, ListGroup, ListGroupItem } from "react-bootstrap";
+import { PageHeader, ListGroup, ListGroupItem, ControlLabel } from "react-bootstrap";
 import "./Home.css";
 
 export default class Home extends Component {
@@ -43,13 +43,16 @@ renderStreetArtList(streetart) {
   return ([{}].concat(streetart).map(
     (streetart, i) =>
       i !== 0
-        ? <ListGroupItem
+        ? 
+          <ListGroupItem
             key={streetart.artId}
             href={`/art/${streetart.artId}`}
             onClick={this.handleStreetArtClick}
-          ><img src ={streetart.picture}  alt="street art" width="100%" />
-           </ListGroupItem>
-
+          > <div className="art-header">
+            {streetart.username}
+            </div>
+            <img src ={streetart.picture} alt="street art"  width="100%" />
+          </ListGroupItem>
         : <ListGroupItem
             key="new"
             href="/art/new"

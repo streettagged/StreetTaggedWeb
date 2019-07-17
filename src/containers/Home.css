@@ -31,6 +31,12 @@
   color: #666;
 }
 
+.Home .art-header{
+  font-weight: 1000;
+  text-align: left;
+  padding: 20px 0 10px 5px;
+}
+
 .thumbnail {
   height: 100px;
   display: table;
