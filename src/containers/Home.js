@@ -43,11 +43,6 @@ export default class Home extends Component {
    return data.artWorks;
   }
 
-  onClick = (event, props) => {
-    console.log('props: ', props);
-    console.log('event: ', event);
-  }
-
   handleStreetArtClick = event => {
     event.preventDefault();
     this.props.history.push(event.currentTarget.getAttribute("href"));
