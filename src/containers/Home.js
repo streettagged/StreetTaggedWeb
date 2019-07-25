@@ -4,8 +4,6 @@ import { Link } from "react-router-dom";
 import { PageHeader, ListGroup, ListGroupItem, ControlLabel } from "react-bootstrap";
 import "./Home.css";
 
-import HeartCheckbox from 'react-heart-checkbox';
-
 export default class Home extends Component {
   constructor(props) {
     super(props);
@@ -87,6 +85,10 @@ onClickFavorite = async (i, e) => {
   this.setState({ streetart: list });
 }
 
+onOpenArt = async (id) => {
+  this.props.history.push('/art/'+id);
+}
+
 renderStreetArtList(streetart) {
   return ([{}].concat(streetart).map(
     (streetart, i) =>
@@ -96,9 +98,9 @@ renderStreetArtList(streetart) {
           <div className="art-header">
            {streetart.username}
           </div>
-          <img src ={streetart.picture} alt="street art"  width="100%" />
+          <img onClick={this.onOpenArt.bind(this, streetart.artId)} src={streetart.picture} alt="street art"  width="100%" />
           <div>
-            <button onClick={this.onClickFavorite.bind(this, i)}>{streetart.isFavorited ? "Hearted" : "Heart"}</button>
+            <button onClick={this.onClickFavorite.bind(this, i)}>{streetart.isFavorited ? "Un-favorite" : "Favorite it"}</button>
           </div>
          </div>
         : <ListGroupItem
