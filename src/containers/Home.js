@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { API } from "aws-amplify";
+import { API, Auth } from "aws-amplify";
 import { Link } from "react-router-dom";
 import { PageHeader, ListGroup, ListGroupItem, ControlLabel } from "react-bootstrap";
 import "./Home.css";
@@ -30,7 +30,16 @@ export default class Home extends Component {
   }
 
   async streetart() {
-   const data = await API.get("street-art", "/art");
+   const { accessToken: { jwtToken } } = Auth.user.signInUserSession;
+
+   let body = {
+       body: {
+         "token":jwtToken
+       },
+       headers: {"Content-Type": "application/json"}
+   }
+
+   const data = await API.post("street-art", "/search/art", body);
    return data.artWorks;
   }
 
@@ -38,21 +47,57 @@ export default class Home extends Component {
     event.preventDefault();
     this.props.history.push(event.currentTarget.getAttribute("href"));
   }
-//header={streetart.name.trim().split("\n")[0]}
+
+onClickFavorite = async (i, e) => {
+  const { accessToken: { jwtToken } } = Auth.user.signInUserSession;
+  const { streetart } = this.state;
+  const list = streetart;
+
+  const item = list[i - 1];
+
+  if (item.isFavorited) {
+    let body = {
+        body: {
+          "token":jwtToken,
+          "artId": item.artId
+        },
+        headers: {"Content-Type": "application/json"}
+    }
+    await API.del("street-art", "/favorite", body);
+  } else {
+    let body = {
+        body: {
+          "token":jwtToken,
+          "artId": item.artId
+        },
+        headers: {"Content-Type": "application/json"}
+    }
+    await API.post("street-art", "/favorite", body);
+  }
+
+  list[i - 1].isFavorited = !list[i - 1].isFavorited;
+
+  this.setState({ streetart: list });
+}
+
+onOpenArt = async (id) => {
+  this.props.history.push('/art/'+id);
+}
+
 renderStreetArtList(streetart) {
   return ([{}].concat(streetart).map(
     (streetart, i) =>
       i !== 0
-        ? 
-          <ListGroupItem
-            key={streetart.artId}
-            href={`/art/${streetart.artId}`}
-            onClick={this.handleStreetArtClick}
-          > <div className="art-header">
-            {streetart.username}
-            </div>
-            <img src ={streetart.picture} alt="street art"  width="100%" />
-          </ListGroupItem>
+        ?
+         <div key={streetart.artId + ':' + i}>
+          <div className="art-header">
+           {streetart.username}
+          </div>
+          <img onClick={this.onOpenArt.bind(this, streetart.artId)} src={streetart.picture} alt="street art"  width="100%" />
+          <div>
+            <button onClick={this.onClickFavorite.bind(this, i)}>{streetart.isFavorited ? "Un-favorite" : "Favorite it"}</button>
+          </div>
+         </div>
         : <ListGroupItem
             key="new"
             href="/art/new"
@@ -83,6 +128,11 @@ renderLander() {
   );
 }
 
+/*
+<ListGroup>
+  {!this.state.isLoading && this.renderStreetArtList(this.state.streetart)}
+</ListGroup>
+*/
 
 renderArt() {
   return (
