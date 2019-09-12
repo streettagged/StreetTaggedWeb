@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { API, Auth } from "aws-amplify";
 import { Link } from "react-router-dom";
-import { PageHeader, ListGroup, ListGroupItem, ControlLabel } from "react-bootstrap";
+import { PageHeader, ListGroup, ListGroupItem, ControlLabel, Grid, Row, Col } from "react-bootstrap";
 import "./Home.css";
 
 import UnFavoriteIcon from '../components/UnFavorite';
@@ -104,24 +104,63 @@ renderStreetArtList(streetart) {
          }}>
           <img onClick={this.onOpenArt.bind(this, streetart.artId)} src={streetart.picture} alt="street art"  width="100%" />
           
-          <div style={{
-            paddingTop: '14px',
-            paddingLeft: '10px',
-            paddingBottom: '10px',
-            display: 'flex',
-            justifyContent: 'flex-start'
-          }}>
-            <a onClick={this.onClickFavorite.bind(this, i)}>{streetart.isFavorited ? (<FavoriteIcon/>) : (<UnFavoriteIcon/>)}</a>
-            <a style={{
-              marginLeft: '10px'
-            }} onClick={this.onClickFavorite.bind(this, i)}><FontAwesomeIcon size="2x" icon={faComments} /></a>
-            <a style={{
-              marginLeft: '10px'
-            }} onClick={this.onClickFavorite.bind(this, i)}><FontAwesomeIcon size="2x" icon={faShareAlt} /></a>
-          </div>
-          <div className="art-header">
-           {streetart.username}
-          </div>
+          <Grid>
+            <Row>
+              <Col md={6} style={{
+                display: 'flex',
+                justifyContent: 'flex-start',
+                paddingTop: '14px'
+              }}>
+                <a onClick={this.onClickFavorite.bind(this, i)}>{streetart.isFavorited ? (<FavoriteIcon/>) : (<UnFavoriteIcon/>)}</a>
+                <a style={{
+                  marginLeft: '10px'
+                }} onClick={this.onClickFavorite.bind(this, i)}><FontAwesomeIcon size="2x" icon={faComments} /></a>
+                <a style={{
+                  marginLeft: '10px'
+                }} onClick={this.onClickFavorite.bind(this, i)}><FontAwesomeIcon size="2x" icon={faShareAlt} /></a>
+              </Col>
+
+
+              <Col md={6} style={{
+                paddingTop: '14px',
+                display: 'flex',
+                justifyContent: 'flex-end',
+                right: '30px'
+              }}>  
+                0.61 Miles
+              </Col>
+
+            </Row>
+
+
+
+
+            <Row>
+              <Col md={6} style={{
+                display: 'flex',
+                justifyContent: 'flex-start',
+                paddingTop: '14px'
+              }}>
+                <div className="art-header">
+                  {streetart.username}
+                </div>
+              </Col>
+
+              <Col md={6} style={{
+                paddingTop: '14px',
+                display: 'flex',
+                justifyContent: 'flex-end',
+                right: '30px'
+              }}>  
+                Artist Name
+              </Col>
+
+            </Row>
+          </Grid>
+
+          
+
+
 
           
          </div>
