@@ -9,7 +9,7 @@ import FavoriteIcon from '../components/Favorite';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { faComments, faShareAlt } from '@fortawesome/pro-regular-svg-icons';
+import { faComments, faShareAlt, faCamera, faPalette, faShoePrints } from '@fortawesome/pro-regular-svg-icons';
 
 
 export default class Home extends Component {
@@ -119,12 +119,19 @@ renderStreetArtList(streetart) {
               marginLeft: '10px'
             }} onClick={this.onClickFavorite.bind(this, i)}><FontAwesomeIcon size="2x" icon={faShareAlt} /></a>
           </div>
-          <div className="art-header">
-           {streetart.username}
+          <div className="user-meta">
+            <div>
+             <a onClick={this.onOpenArt.bind(this, streetart.artId)}><FontAwesomeIcon  icon={faCamera} /> {streetart.username}</a>
+             </div>
           </div>
 
-          
-         </div>
+          <div className="art-meta">
+
+          <div><a onClick={this.onOpenArt.bind(this, streetart.artId)}><FontAwesomeIcon  icon={faPalette} /> Artist Name</a></div>  
+          <div> <a onClick={this.onOpenArt.bind(this, streetart.artId)}><FontAwesomeIcon  icon={faShoePrints} /> 600 ft</a></div>  
+          </div>
+          </div>
+      
         : 
           <div key="0" style={{
             marginBottom: '20px'
