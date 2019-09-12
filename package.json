@@ -7,6 +7,7 @@
     "@fortawesome/free-brands-svg-icons": "^5.10.2",
     "@fortawesome/free-regular-svg-icons": "^5.10.2",
     "@fortawesome/free-solid-svg-icons": "^5.10.2",
+    "@fortawesome/pro-regular-svg-icons": "^5.10.2",
     "@fortawesome/react-fontawesome": "^0.1.4",
     "aws-amplify": "^1.1.29",
     "aws-s3": "^2.0.5",
@@ -46,5 +47,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@fortawesome/fontawesome-pro": "^5.10.2"
   }
 }

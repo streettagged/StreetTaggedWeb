@@ -7,6 +7,11 @@ import "./Home.css";
 import UnFavoriteIcon from '../components/UnFavorite';
 import FavoriteIcon from '../components/Favorite';
 
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
+import { faComments, faShareAlt } from '@fortawesome/pro-regular-svg-icons';
+
+
 export default class Home extends Component {
   constructor(props) {
     super(props);
@@ -97,10 +102,8 @@ renderStreetArtList(streetart) {
             borderRadius: 0,
             boxShadow: '0px 1px 1px 0px rgba(0,0,0,0.2), 0px 0px 1px 0px rgba(0,0,0,0.14), 0px 0px 0px 0px rgba(0,0,0,0.12)',
          }}>
-          <div className="art-header">
-           {streetart.username}
-          </div>
           <img onClick={this.onOpenArt.bind(this, streetart.artId)} src={streetart.picture} alt="street art"  width="100%" />
+          
           <div style={{
             paddingTop: '14px',
             paddingLeft: '10px',
@@ -109,10 +112,21 @@ renderStreetArtList(streetart) {
             justifyContent: 'flex-start'
           }}>
             <a onClick={this.onClickFavorite.bind(this, i)}>{streetart.isFavorited ? (<FavoriteIcon/>) : (<UnFavoriteIcon/>)}</a>
+            <a style={{
+              marginLeft: '10px'
+            }} onClick={this.onClickFavorite.bind(this, i)}><FontAwesomeIcon size="2x" icon={faComments} /></a>
+            <a style={{
+              marginLeft: '10px'
+            }} onClick={this.onClickFavorite.bind(this, i)}><FontAwesomeIcon size="2x" icon={faShareAlt} /></a>
           </div>
+          <div className="art-header">
+           {streetart.username}
+          </div>
+
+          
          </div>
         : 
-          <div style={{
+          <div key="0" style={{
             marginBottom: '20px'
           }}>
           <ListGroupItem
