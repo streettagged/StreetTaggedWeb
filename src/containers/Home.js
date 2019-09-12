@@ -9,7 +9,7 @@ import FavoriteIcon from '../components/Favorite';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { faComments, faShareAlt, faCamera, faPalette, faShoePrints, faMapMarked } from '@fortawesome/pro-regular-svg-icons';
+import { faComments, faShareAlt, faCamera, faPalette, faShoePrints, faMapMarked, faCameraRetro } from '@fortawesome/pro-regular-svg-icons';
 
 
 export default class Home extends Component {
@@ -143,7 +143,7 @@ renderStreetArtList(streetart) {
             onClick={this.handleStreetArtClick}
           >
             <h4>
-              <b>{"\uFF0B"}</b> Upload New Artwork
+              <FontAwesomeIcon size="2x" icon={faCameraRetro} />
             </h4>
           </ListGroupItem>
           </div>
@@ -177,7 +177,7 @@ renderLander() {
 renderArt() {
   return (
     <div className="streetart">
-      <PageHeader>Latest Street Art</PageHeader>
+      <PageHeader>Latest</PageHeader>
       <ListGroup>
         {!this.state.isLoading && this.renderStreetArtList(this.state.streetart)}
       </ListGroup>
