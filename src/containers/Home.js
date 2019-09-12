@@ -9,7 +9,7 @@ import FavoriteIcon from '../components/Favorite';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { faComments, faShareAlt, faCamera, faPalette, faShoePrints } from '@fortawesome/pro-regular-svg-icons';
+import { faComments, faShareAlt, faCamera, faPalette, faShoePrints, faMapMarked } from '@fortawesome/pro-regular-svg-icons';
 
 
 export default class Home extends Component {
@@ -128,7 +128,8 @@ renderStreetArtList(streetart) {
           <div className="art-meta">
 
           <div><a onClick={this.onOpenArt.bind(this, streetart.artId)}><FontAwesomeIcon  icon={faPalette} /> Artist Name</a></div>  
-          <div> <a onClick={this.onOpenArt.bind(this, streetart.artId)}><FontAwesomeIcon  icon={faShoePrints} /> 600 ft</a></div>  
+          <div><a onClick={this.onOpenArt.bind(this, streetart.artId)}><FontAwesomeIcon  icon={faMapMarked} /> 600 ft</a></div>  
+          <div><a onClick={this.onOpenArt.bind(this, streetart.artId)}><FontAwesomeIcon  icon={faShoePrints} /> 1 minute</a></div>  
           </div>
           </div>
       
