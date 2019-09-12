@@ -4,6 +4,8 @@ import config from "../config";
 import Pin from '../components/Pin';
 import ControlPanel from '../components/ControlPanel';
 
+import { API, Auth } from "aws-amplify";
+
 const TOKEN = config.mapbox.TOKEN;
 
 const navStyle = {
@@ -32,8 +34,32 @@ export default class MapView extends Component {
         latitude: 37.785164,
         longitude: -100
       },
-      events: {}
+      events: {},
+      artWorks: [],
     };
+  }
+
+  async componentDidMount() {
+    try {
+      const artWorks = await this.streetart();
+      this.setState({ artWorks });
+    } catch (e) {
+      alert(e);
+    }
+  }
+
+  streetart = async () => {
+    const { accessToken: { jwtToken } } = Auth.user.signInUserSession;
+ 
+    let body = {
+        body: {
+          "token":jwtToken
+        },
+        headers: {"Content-Type": "application/json"}
+    }
+ 
+    const data = await API.post("street-art", "/search/art", body);
+    return data.artWorks;
   }
 
   _updateViewport = viewport => {
@@ -67,37 +93,49 @@ export default class MapView extends Component {
     });
   };
 
-render() {
-    const {viewport, marker} = this.state;
+  _onMarkerClick = (artId) => {
+    this.props.history.push('/art/'+artId);
+  };
 
-      return (
+
+  render() {
+    const {viewport, marker, artWorks} = this.state;
+
+    let markers = [];
+
+    for (let art of artWorks) {
+      const { location: { coordinates }, artId } = art;
+      const longitude = coordinates[0];
+      const latitude = coordinates[1];
+
+      markers.push(
+        <Marker key={artId}
+          longitude={longitude}
+          latitude={latitude}
+
+        >
+          <div onClick={() => {
+            this._onMarkerClick(artId);
+          }}>
+            <Pin size={20}/>
+          </div>  
+        </Marker>
+      );
+    }
+
+    return (
       <MapGL
         {...viewport}
         width="100%"
         mapStyle="mapbox://styles/mapbox/dark-v9"
-        mapboxApiAccessToken={TOKEN}>
+        mapboxApiAccessToken={TOKEN}
+        onViewportChange={(viewport) => this.setState({viewport})}>
 
-        <Marker
-          longitude={marker.longitude}
-          latitude={marker.latitude}
-          offsetTop={-20}
-          offsetLeft={-10}
-          draggable
-          onDragStart={this._onMarkerDragStart}
-          onDrag={this._onMarkerDrag}
-          onDragEnd={this._onMarkerDragEnd}
-        >
-          <Pin size={20} />
-        </Marker>
+        {markers}
 
         <div className="nav" style={navStyle}>
           <NavigationControl onViewportChange={this._updateViewport} />
         </div>
-
-        <ControlPanel
-          containerComponent={this.props.containerComponent}
-          events={this.state.events}
-        />
 
       </MapGL>
       
