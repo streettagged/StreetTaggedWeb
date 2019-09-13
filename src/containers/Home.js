@@ -176,8 +176,7 @@ renderLander() {
 
 renderArt() {
   return (
-    <div className="streetart">
-      <PageHeader>Latest</PageHeader>
+    <div className="streetart"> 
       <ListGroup>
         {!this.state.isLoading && this.renderStreetArtList(this.state.streetart)}
       </ListGroup>

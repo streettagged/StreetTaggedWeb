@@ -63,6 +63,12 @@ class App extends Component {
           <Nav pullRight>
       {this.state.isAuthenticated
         ? <Fragment>
+           <LinkContainer to="/latest">
+              <NavItem>Latest</NavItem>
+            </LinkContainer>
+              <LinkContainer to="/mapview">
+              <NavItem>Near Me</NavItem>
+            </LinkContainer>
             <LinkContainer to="/settings">
               <NavItem>Settings</NavItem>
             </LinkContainer>

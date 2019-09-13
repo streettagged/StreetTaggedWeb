@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import MapGL, {Marker, NavigationControl} from 'react-map-gl';
+import MapGL, {Marker, NavigationControl,GeolocateControl} from 'react-map-gl';
 import config from "../config";
 import Pin from '../components/Pin';
-import ControlPanel from '../components/ControlPanel';
+
 
 import { API, Auth } from "aws-amplify";
 
@@ -13,6 +13,13 @@ const navStyle = {
   top: 0,
   left: 0,
   padding: '10px'
+};
+
+const geolocateStyle = {
+  position: 'absolute',
+  top: 0,
+  left: 0,
+  margin: 10
 };
 
 
@@ -30,22 +37,41 @@ export default class MapView extends Component {
         width: 500,
         height: 500,
       },
-      marker: {
-        latitude: 37.785164,
-        longitude: -100
-      },
+      userLocation: {},
       events: {},
       artWorks: [],
     };
   }
 
+  setUserLocation = () => {
+    navigator.geolocation.getCurrentPosition(position => {
+       let setUserLocation = {
+           lat: position.coords.latitude,
+           long: position.coords.longitude
+        };
+       let newViewport = {
+          height: "100vh",
+          width: "100vw",
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+          zoom: 13
+        };
+        this.setState({
+          viewport: newViewport,
+          userLocation: setUserLocation
+       });
+    });
+  };
+
   async componentDidMount() {
+    this.setUserLocation();
     try {
       const artWorks = await this.streetart();
       this.setState({ artWorks });
     } catch (e) {
       alert(e);
     }
+  
   }
 
   streetart = async () => {
@@ -66,40 +92,13 @@ export default class MapView extends Component {
     this.setState({viewport});
   };
 
-  _logDragEvent(name, event) {
-    this.setState({
-      events: {
-        ...this.state.events,
-        [name]: event.lngLat
-      }
-    });
-  }
-
-  _onMarkerDragStart = event => {
-    this._logDragEvent('onDragStart', event);
-  };
-
-  _onMarkerDrag = event => {
-    this._logDragEvent('onDrag', event);
-  };
-
-  _onMarkerDragEnd = event => {
-    this._logDragEvent('onDragEnd', event);
-    this.setState({
-      marker: {
-        longitude: event.lngLat[0],
-        latitude: event.lngLat[1]
-      }
-    });
-  };
-
   _onMarkerClick = (artId) => {
     this.props.history.push('/art/'+artId);
   };
 
 
   render() {
-    const {viewport, marker, artWorks} = this.state;
+    const {viewport, artWorks} = this.state;
 
     let markers = [];
 
@@ -122,6 +121,7 @@ export default class MapView extends Component {
         </Marker>
       );
     }
+    
 
     return (
       <MapGL
@@ -132,10 +132,15 @@ export default class MapView extends Component {
         onViewportChange={(viewport) => this.setState({viewport})}>
 
         {markers}
-
+        
         <div className="nav" style={navStyle}>
           <NavigationControl onViewportChange={this._updateViewport} />
         </div>
+        <GeolocateControl 
+          style={geolocateStyle}
+          positionOptions={{enableHighAccuracy: true}}
+          trackUserLocation={true}
+        />
 
       </MapGL>
       
