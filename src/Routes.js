@@ -21,6 +21,7 @@ export default ({ childProps }) =>
     <UnauthenticatedRoute path="/login" exact component={Login} props={childProps} />
     <UnauthenticatedRoute path="/signup" exact component={Signup} props={childProps} />
     <UnauthenticatedRoute path="/login/reset" exact component={ResetPassword} props={childProps}/>
+    <AuthenticatedRoute path="/latest" exact component={Home} props={childProps} />
     <AuthenticatedRoute path="/mapview" exact component={MapView} props={childProps} />
     <AuthenticatedRoute path="/art/new" exact component={NewArt} props={childProps} />
     <AuthenticatedRoute path="/art/:id" exact component={StreetArt} props={childProps} />
