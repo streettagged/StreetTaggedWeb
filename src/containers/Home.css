@@ -31,12 +31,21 @@
   color: #666;
 }
 
-.Home .art-header{
+.Home .streetart a {
+  color: #000000;
+}
+
+
+.Home .art-meta{
+  font-weight: 1000;
+  text-align: right;
+  padding: 0px 10px 14px 10px;
+}
+.Home .user-meta{
   font-weight: 1000;
   text-align: left;
   padding: 0px 10px 14px 10px;
 }
-
 .thumbnail {
   height: 100px;
   display: table;

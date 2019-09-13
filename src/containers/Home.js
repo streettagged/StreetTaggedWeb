@@ -9,7 +9,7 @@ import FavoriteIcon from '../components/Favorite';
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-import { faComments, faShareAlt } from '@fortawesome/pro-regular-svg-icons';
+import { faComments, faShareAlt, faCamera, faPalette, faShoePrints, faMapMarked, faCameraRetro } from '@fortawesome/pro-regular-svg-icons';
 
 
 export default class Home extends Component {
@@ -119,12 +119,20 @@ renderStreetArtList(streetart) {
               marginLeft: '10px'
             }} onClick={this.onClickFavorite.bind(this, i)}><FontAwesomeIcon size="2x" icon={faShareAlt} /></a>
           </div>
-          <div className="art-header">
-           {streetart.username}
+          <div className="user-meta">
+            <div>
+             <a onClick={this.onOpenArt.bind(this, streetart.artId)}><FontAwesomeIcon  icon={faCamera} /> {streetart.username}</a>
+             </div>
           </div>
 
-          
-         </div>
+          <div className="art-meta">
+
+          <div><a onClick={this.onOpenArt.bind(this, streetart.artId)}><FontAwesomeIcon  icon={faPalette} /> Artist Name</a></div>  
+          <div><a onClick={this.onOpenArt.bind(this, streetart.artId)}><FontAwesomeIcon  icon={faMapMarked} /> 600 ft</a></div>  
+          <div><a onClick={this.onOpenArt.bind(this, streetart.artId)}><FontAwesomeIcon  icon={faShoePrints} /> 1 minute</a></div>  
+          </div>
+          </div>
+      
         : 
           <div key="0" style={{
             marginBottom: '20px'
@@ -135,7 +143,7 @@ renderStreetArtList(streetart) {
             onClick={this.handleStreetArtClick}
           >
             <h4>
-              <b>{"\uFF0B"}</b> Upload New Artwork
+              <FontAwesomeIcon size="2x" icon={faCameraRetro} />
             </h4>
           </ListGroupItem>
           </div>
@@ -168,7 +176,7 @@ renderLander() {
 
 renderArt() {
   return (
-    <div className="streetart">
+    <div className="streetart"> 
       <ListGroup>
         {!this.state.isLoading && this.renderStreetArtList(this.state.streetart)}
       </ListGroup>
