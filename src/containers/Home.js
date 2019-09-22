@@ -47,8 +47,8 @@ export default class Home extends Component {
        headers: {"Content-Type": "application/json"}
    }
 
-   const data = await API.post("street-art", "/search/art", body);
-   return data.artWorks;
+   const data = await API.post("street-art", "/items/search", body);
+   return data.items;
   }
 
   handleStreetArtClick = event => {
@@ -67,20 +67,20 @@ onClickFavorite = async (i, e) => {
     let body = {
         body: {
           "token":jwtToken,
-          "artId": item.artId
+          "itemId": item.artId
         },
         headers: {"Content-Type": "application/json"}
     }
-    await API.del("street-art", "/favorite", body);
+    await API.del("street-art", "/favorites", body);
   } else {
     let body = {
         body: {
           "token":jwtToken,
-          "artId": item.artId
+          "itemId": item.artId
         },
         headers: {"Content-Type": "application/json"}
     }
-    await API.post("street-art", "/favorite", body);
+    await API.post("street-art", "/favorites", body);
   }
 
   list[i - 1].isFavorited = !list[i - 1].isFavorited;

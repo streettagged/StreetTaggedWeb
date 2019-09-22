@@ -33,7 +33,7 @@ export default class StreetArt extends Component {
   }
 
   getArt() {
-    return API.get("street-art", `/art/${this.props.match.params.id}`);
+    return API.get("street-art", `/items/${this.props.match.params.id}`);
   }
 
 /*   validateForm() {
