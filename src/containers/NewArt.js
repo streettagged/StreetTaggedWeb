@@ -95,7 +95,7 @@ export default class NewArt extends Component {
       body: body, // replace this with attributes you need
       headers: {"Content-Type": "application/json"}
     }
-    return API.post("street-art", "/art", myInit)
+    return API.post("street-art", "/items", myInit)
   }
 
   render() {
