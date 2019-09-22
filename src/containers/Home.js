@@ -84,7 +84,6 @@ onClickFavorite = async (i, e) => {
   }
 
   list[i - 1].isFavorited = !list[i - 1].isFavorited;
-
   this.setState({ streetart: list });
 }
 
