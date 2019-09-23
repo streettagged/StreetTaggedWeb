@@ -3,6 +3,7 @@ import { API, Auth } from "aws-amplify";
 import { Link } from "react-router-dom";
 import { PageHeader, ListGroup, ListGroupItem, ControlLabel } from "react-bootstrap";
 import "./Home.css";
+import {buildImage} from "../libs/imageUtil";
 
 import UnFavoriteIcon from '../components/UnFavorite';
 import FavoriteIcon from '../components/Favorite';
@@ -10,7 +11,6 @@ import FavoriteIcon from '../components/Favorite';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 import { faComments, faShareAlt, faCamera, faPalette, faShoePrints, faMapMarked, faCameraRetro } from '@fortawesome/pro-regular-svg-icons';
-
 
 export default class Home extends Component {
   constructor(props) {
@@ -92,7 +92,10 @@ onOpenArt = async (id) => {
 }
 
 renderStreetArtList(streetart) {
+  let newWidth = 1140
+  let newHeight = 1140;
   return ([{}].concat(streetart).map(
+   
     (streetart, i) =>
       i !== 0
         ?
@@ -101,7 +104,7 @@ renderStreetArtList(streetart) {
             borderRadius: 0,
             boxShadow: '0px 1px 1px 0px rgba(0,0,0,0.2), 0px 0px 1px 0px rgba(0,0,0,0.14), 0px 0px 0px 0px rgba(0,0,0,0.12)',
          }}>
-          <img onClick={this.onOpenArt.bind(this, streetart.artId)} src={streetart.picture} alt="street art"  width="100%" />
+          <img onClick={this.onOpenArt.bind(this, streetart.artId)} src={buildImage(streetart.picture,newWidth,newHeight)} alt="street art" width={newWidth}  />
           
           <div style={{
             paddingTop: '14px',
