@@ -18,7 +18,6 @@ export function buildImage (item,newWidth,newHeight) {
       
       }
     });
-    console.log(imageRequest)
     let url = `${CloudFrontUrl}/${btoa(imageRequest)}`;
     return url;
     
